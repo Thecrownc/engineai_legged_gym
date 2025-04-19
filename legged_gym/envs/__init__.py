@@ -32,10 +32,12 @@ from legged_gym import LEGGED_GYM_ROOT_DIR, LEGGED_GYM_ENVS_DIR
 from .base.legged_robot import LeggedRobot
 from .zqsa01.zqsa01 import ZqSA01
 from .zqsa01.zqsa01_config import ZqSA01Cfg, ZqSA01CfgPPO
-
+from .x1.x1 import x1
+from .x1.x1_config import x1Cfg, x1CfgPPO
 import os
 
 from legged_gym.utils.task_registry import task_registry
 
 task_registry.register("zqsa01", ZqSA01, ZqSA01Cfg(), ZqSA01CfgPPO())
+task_registry.register("x1", x1, x1Cfg(), x1CfgPPO())
 

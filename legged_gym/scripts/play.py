@@ -45,10 +45,10 @@ from datetime import datetime
 import pygame
 from threading import Thread
 
-x_vel_cmd, y_vel_cmd, yaw_vel_cmd = 0.0, 0.0, 0.0
+x_vel_cmd, y_vel_cmd, yaw_vel_cmd = 0.8, 0.0, 0.0
 x_vel_max, y_vel_max, yaw_vel_max = 1.5, 1.0, 3.0
 
-joystick_use = True
+joystick_use = False
 joystick_opened = False
 
 if joystick_use:

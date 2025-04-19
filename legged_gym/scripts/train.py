@@ -39,6 +39,10 @@ import torch
 from record_config import record_config
 
 def train(args):
+    torch.cuda.empty_cache()
+    print("memort_allocated : ",torch.cuda.memory_allocated())
+    print("memory_reserved :",torch.cuda.memory_reserved())
+
     env, env_cfg = task_registry.make_env(name=args.task, args=args)
     ppo_runner, train_cfg, log_dir = task_registry.make_alg_runner(env=env, name=args.task, args=args)
     record_config(log_root=log_dir, name=args.task)
