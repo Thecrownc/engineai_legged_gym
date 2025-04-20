@@ -9,7 +9,7 @@ def record_config(log_root, name="a1_amp"):
     file_path1=os.path.join(log_dir, str_config)
     file_path2=os.path.join(log_dir, 'legged_robot_config.txt')
     
-    root1 = name.split('_')[0]
+    root1 = name
 
     root_path1 = os.path.join(LEGGED_GYM_ENVS_DIR, root1, name + '_config.py')
     root_path2 = os.path.join(LEGGED_GYM_ENVS_DIR, 'base', 'legged_robot_config.py')

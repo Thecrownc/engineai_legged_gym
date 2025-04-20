@@ -189,14 +189,14 @@ class x1Cfg(LeggedRobotCfg):
         # put some settings here for LLM parameter tuning
         target_joint_pos_scale = 0.26    # rad ?
         target_feet_height = 0.05       # m  ?
-        cycle_time = 0.8                # sec ??
+        cycle_time = 0.6                # sec ??
         only_positive_rewards = True
         tracking_sigma = 5 
         max_contact_force = 500  # forces above this value are penalized
         
         class scales:
             joint_pos = 2.2
-            feet_clearance = 1.6
+            feet_clearance = 1.2
             feet_contact_number = 1.4
             # gait
             feet_air_time = 1.2
@@ -213,7 +213,7 @@ class x1Cfg(LeggedRobotCfg):
             track_vel_hard = 0.5
             # stand_still = 5
             # base pos
-            default_joint_pos = 0.8
+            default_joint_pos = 1.0
             orientation = 1.
             base_height = 0.2
             base_acc = 0.2
