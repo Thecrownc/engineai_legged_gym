@@ -172,11 +172,11 @@ def run_mujoco(policy, cfg):
             obs[0, 2] = x_vel_cmd * cfg.normalization.obs_scales.lin_vel
             obs[0, 3] = y_vel_cmd * cfg.normalization.obs_scales.lin_vel
             obs[0, 4] = yaw_vel_cmd * cfg.normalization.obs_scales.ang_vel
-            obs[0, 5:17] = (q - cfg.robot_config.default_dof_pos) * cfg.normalization.obs_scales.dof_pos
-            obs[0, 17:29] = dq * cfg.normalization.obs_scales.dof_vel
-            obs[0, 29:41] = action
-            obs[0, 41:44] = omega
-            obs[0, 44:47] = eu_ang
+            obs[0, 5:19] = (q - cfg.robot_config.default_dof_pos) * cfg.normalization.obs_scales.dof_pos
+            obs[0, 19:33] = dq * cfg.normalization.obs_scales.dof_vel
+            obs[0, 33:47] = action
+            obs[0, 47:50] = omega
+            obs[0, 50:53] = eu_ang
 
             obs = np.clip(obs, -cfg.normalization.clip_observations, cfg.normalization.clip_observations)
 
