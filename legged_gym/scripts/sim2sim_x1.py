@@ -1,4 +1,4 @@
-from legged_gym.envs import ZqSA01Cfg
+from legged_gym.envs import x1Cfg
 import math
 import numpy as np
 import mujoco, mujoco_viewer
@@ -12,10 +12,10 @@ import torch
 import pygame
 from threading import Thread
 
-x_vel_cmd, y_vel_cmd, yaw_vel_cmd = 0.5, 0.0, 0.0
-x_vel_max, y_vel_max, yaw_vel_max = 1.5, 1.0, 3.0
+x_vel_cmd, y_vel_cmd, yaw_vel_cmd = 0.0, 0.0, 0.0
+x_vel_max, y_vel_max, yaw_vel_max = 1.2, 1.0, 3.0
 
-joystick_use = False
+joystick_use = True
 joystick_opened = False
 
 if joystick_use:
@@ -150,7 +150,7 @@ def run_mujoco(policy, cfg):
         q, dq, quat, v, omega, gvec, base_pos, foot_positions, foot_forces = get_obs(data,model)
         q = q[-cfg.env.num_actions:]
         dq = dq[-cfg.env.num_actions:]
-        print(foot_positions)
+        # print(foot_positions)
         base_z = base_pos[2]
         foot_z = foot_positions
         foot_force_z = foot_forces
@@ -173,8 +173,12 @@ def run_mujoco(policy, cfg):
             obs[0, 41:44] = omega
             obs[0, 44:47] = eu_ang
 
+            vel_norm = np.sqrt(x_vel_cmd**2 + y_vel_cmd**2 + yaw_vel_cmd**2)
+            stand_command = (vel_norm <= 0.05)
+            obs[0, -1] = stand_command
+            
             obs = np.clip(obs, -cfg.normalization.clip_observations, cfg.normalization.clip_observations)
-
+            print(x_vel_cmd, y_vel_cmd, yaw_vel_cmd)
             hist_obs.append(obs)
             hist_obs.popleft()
 
@@ -289,7 +293,7 @@ if __name__ == '__main__':
     parser.add_argument('--terrain', action='store_true', help='terrain or plane')
     args = parser.parse_args()
 
-    class Sim2simCfg(ZqSA01Cfg):
+    class Sim2simCfg(x1Cfg):
         class sim_config:
             mujoco_model_path = f'{LEGGED_GYM_ROOT_DIR}/resources/robots/x1/mjcf/xyber_x1_flat.xml'
             sim_duration = 120.0
@@ -297,10 +301,14 @@ if __name__ == '__main__':
             decimation = 10
 
         class robot_config:
-            kps = np.array([50, 50, 70, 70, 20, 20, 50, 50, 70, 70, 20, 20], dtype=np.double)
-            kds = np.array([5.0, 5.0, 7.0, 7.0, 2, 2, 5.0, 5.0, 7.0, 7.0, 2, 2], dtype=np.double)
-            tau_limit = 200. * np.ones(12, dtype=np.double)
-            default_dof_pos = np.array([0.0, 0.0, -0.24, 0.48, -0.24, 0.0, 0.0, 0.0, -0.24, 0.48, -0.24, 0.0])
+            kps = np.array([60, 40, 35, 60, 35, 35, 
+                            60, 40, 35, 60, 35, 35], dtype=np.double)
+            kds = np.array([3.0, 3.0, 4.0, 10.0, 3, 3, 
+                            3.0, 3.0, 4.0, 10.0, 3, 3], dtype=np.double)
+            tau_limit = 500. * np.ones(12, dtype=np.double)
+            default_dof_pos = np.array([0.4, 0.05, -0.31, 0.48, -0.21, 0.0,
+                                        -0.4, -0.05, 0.31, 0.48, -0.21, 0.0])
+
 
     policy = torch.jit.load(args.load_model)
     run_mujoco(policy, Sim2simCfg())

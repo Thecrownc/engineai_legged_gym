@@ -2,7 +2,7 @@ import torch
 from legged_gym import LEGGED_GYM_ROOT_DIR
 
 # load the trained policy jit model
-policy_jit_path = f'{LEGGED_GYM_ROOT_DIR}/logs/zqsa01_ppo/0_exported/policies/policy_1.pt'
+policy_jit_path = f'{LEGGED_GYM_ROOT_DIR}/logs/x1_ppo/0_exported/policies/policy_test01.pt'
 policy_jit_model = torch.jit.load(policy_jit_path)
 
 #set the model to evalution mode
@@ -12,7 +12,7 @@ policy_jit_model.eval()
 test_input_tensor = torch.randn(1,705)  
 
 #specify the path and name of the output onnx model
-policy_onnx_model = f'{LEGGED_GYM_ROOT_DIR}/sim2real_deploy/zqsa01_policy.onnx'
+policy_onnx_model = f'{LEGGED_GYM_ROOT_DIR}/sim2real_deploy/x1_policy.onnx'
 
 #export the onnx model
 torch.onnx.export(policy_jit_model,               

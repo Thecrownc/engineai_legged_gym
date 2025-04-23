@@ -28,7 +28,9 @@ class x1Cfg(LeggedRobotCfg):
         file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x1/urdf/x1.urdf'
 
         name = "x1"
+        # foot_name = "6_link"
         foot_name = "ankle_roll"
+        # knee_name = "4_link"
         knee_name = "knee_pitch"
 
         terminate_after_contacts_on = ['base_link', "knee_pitch"]
@@ -41,7 +43,7 @@ class x1Cfg(LeggedRobotCfg):
     class terrain(LeggedRobotCfg.terrain):
         # mesh_type = 'plane'
         mesh_type = 'trimesh'
-        curriculum = True
+        curriculum = False
         # rough terrain only:
         measure_heights = False
         static_friction = 0.6
@@ -52,7 +54,7 @@ class x1Cfg(LeggedRobotCfg):
         num_cols = 20  # number of terrain cols (types)
         max_init_terrain_level = 10  # starting curriculum state
         # plane; obstacles; uniform; slope_up; slope_down, stair_up, stair_down
-        terrain_proportions = [0.2, 0.2, 0.4, 0.1, 0.1, 0, 0]
+        terrain_proportions = [0.0, 0.2, 0.4, 0.1, 0.1, 0.1, 0.1]
         restitution = 0.
 
     class noise(LeggedRobotCfg.noise):
@@ -86,16 +88,18 @@ class x1Cfg(LeggedRobotCfg):
             'right_ankle_pitch_joint': -0.21, 
             'right_ankle_roll_joint': 0.0,
         }
-
     class control(LeggedRobotCfg.control):
         # PD Drive parameters:
         control_type = 'P'
 
-        stiffness = {'hip_pitch_joint': 60, 'hip_roll_joint': 40,'hip_yaw_joint': 35,
-                     'knee_pitch_joint': 60, 'ankle_pitch_joint': 35, 'ankle_roll_joint': 35}
-        damping = {'hip_pitch_joint': 3, 'hip_roll_joint': 3.0,'hip_yaw_joint': 4, 
-                   'knee_pitch_joint': 10, 'ankle_pitch_joint': 3, 'ankle_roll_joint': 3}
-
+        # stiffness = {'1_joint': 50, '2_joint': 50,'3_joint': 70,
+        #              '4_joint': 70, '5_joint': 20, '6_joint': 20}
+        # damping = {'1_joint': 5.0, '2_joint': 5.0,'3_joint': 7.0, 
+        #            '4_joint': 7.0, '5_joint': 2, '6_joint': 2}
+        stiffness = {'hip_pitch_joint': 60, 'hip_roll_joint': 60,'hip_yaw_joint': 40,
+                     'knee_pitch_joint': 80, 'ankle_pitch_joint': 35, 'ankle_roll_joint': 35}
+        damping = {'hip_pitch_joint': 6, 'hip_roll_joint': 3.0,'hip_yaw_joint': 3, 
+                   'knee_pitch_joint': 4, 'ankle_pitch_joint': 2, 'ankle_roll_joint': 2}
         # action scale: target angle = actionScale * action + defaultAngle
         action_scale = 0.5
         # decimation: Number of control action updates @ sim DT per policy DT
@@ -131,7 +135,7 @@ class x1Cfg(LeggedRobotCfg):
         max_push_ang_vel = 0.6
 
         randomize_base_mass = True
-        added_base_mass_range = [-4.0, 4.0]
+        added_base_mass_range = [-3.0, 3.0]
 
         randomize_base_com = True
         added_base_com_range = [-0.06, 0.06]
@@ -183,38 +187,39 @@ class x1Cfg(LeggedRobotCfg):
             heading = [-3.14, 3.14]
 
     class rewards:
-        base_height_target = 0.61
+        # base_height_target = 0.827  TODO 意义不明的参数
+        base_height_target = 0.61  
         min_dist = 0.15
         max_dist = 0.8
         # put some settings here for LLM parameter tuning
         target_joint_pos_scale = 0.26    # rad ?
         target_feet_height = 0.05       # m  ?
-        cycle_time = 0.6                # sec ??
+        cycle_time = 0.8                # sec ??
         only_positive_rewards = True
         tracking_sigma = 5 
         max_contact_force = 500  # forces above this value are penalized
         
         class scales:
             joint_pos = 2.2
-            feet_clearance = 1.2
+            feet_clearance = 2.5
             feet_contact_number = 1.4
             # gait
-            feet_air_time = 1.2
+            feet_air_time = 1.5
             foot_slip = -0.1
-            feet_distance = 0.2
-            knee_distance = 0.2
+            feet_distance = 0.3
+            knee_distance = 0.3
             # contact 
             feet_contact_forces = -0.02
             # vel tracking
-            tracking_lin_vel = 1.8
+            tracking_lin_vel = 1.4
             tracking_ang_vel = 1.1
             vel_mismatch_exp = 0.5  # lin_z; ang x,y
             low_speed = 0.2
             track_vel_hard = 0.5
             # stand_still = 5
             # base pos
-            default_joint_pos = 1.0
-            orientation = 1.
+            default_joint_pos = 1.0 
+            orientation = 2.
             base_height = 0.2
             base_acc = 0.2
             # energy
@@ -267,8 +272,8 @@ class x1CfgPPO(LeggedRobotCfgPPO):
     class runner:
         policy_class_name = 'ActorCritic'
         algorithm_class_name = 'PPO'
-        num_steps_per_env = 24  # per iteration
-        max_iterations = 30000  # number of policy updates
+        num_steps_per_env = 24  # per iteration  60
+        max_iterations = 50000  # number of policy updates
 
         # logging
         save_interval = 100  # check for potential saves every this many iterations

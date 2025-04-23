@@ -90,6 +90,8 @@
 
             <body name="left_shoulder_pitch" pos="0 0.256 -0.1458" quat="0 0 0 -1" gravcomp="0">
               <inertial pos="-0.00251212 -0.00149141 -0.0567447" quat="0.995975 -0.00474479 -0.0345991 0.0825443" mass="1.00679" diaginertia="0.00108562 0.000958162 0.000853398"/>
+              <joint name="left_shoulder_pitch" type='hinge' pos="0 0 0" axis="0 0 1" damping='1'
+                range="-3.14 3.14" />
               <geom type='mesh' mesh='left_shoulder_pitch' pos='0 0 0' euler='-0 0 -0'
                 rgba="1 0.4 0.4 1" />
 
@@ -132,6 +134,8 @@
 
             <body name="right_shoulder_pitch" pos="0 0.256 0.1458" quat="-3.67321e-06 1 0 0" gravcomp="0">
               <inertial pos="0.00250704 -0.00149173 -0.0567433" quat="0.995977 -0.00568417 0.0346063 -0.0824611" mass="1.00679" diaginertia="0.00108562 0.000958168 0.000853396"/>
+              <joint name="right_shoulder_pitch" type='hinge' pos="0 0 0" axis="0 0 1" damping='1'
+                range="-3.14 3.14" />
               <geom type='mesh' mesh='right_shoulder_pitch' pos='0 0 0' euler='-0 0 -0'
                 rgba="1 0.4 0.4 1" />
 
@@ -306,6 +310,7 @@
     <motor name = 'motor_left_knee_pitch' joint = 'left_knee_pitch' ctrlrange = '-150 150' />
     <motor name = 'motor_left_ankle_pitch' joint = 'left_ankle_pitch' ctrlrange = '-18 18' />
     <motor name = 'motor_left_ankle_roll' joint = 'left_ankle_roll' ctrlrange = '-18 18' />
+    <motor name = 'motor_left_shoulder_pitch' joint = 'left_shoulder_pitch' ctrlrange = '-18 18' />
 
     <motor name = 'motor_right_hip_pitch' joint = 'right_hip_pitch' ctrlrange = '-150 150' />
     <motor name = 'motor_right_hip_roll' joint = 'right_hip_roll' ctrlrange = '-50 50' />
@@ -313,6 +318,7 @@
     <motor name = 'motor_right_knee_pitch' joint = 'right_knee_pitch' ctrlrange = '-150 150' />
     <motor name = 'motor_right_ankle_pitch' joint = 'right_ankle_pitch' ctrlrange = '-18 18' />
     <motor name = 'motor_right_ankle_roll' joint = 'right_ankle_roll' ctrlrange = '-18 18' />
+    <motor name = 'motor_right_shoulder_pitch' joint = 'right_shoulder_pitch' ctrlrange = '-18 18' />
   </actuator>
 
   <sensor>
@@ -329,6 +335,7 @@
     <jointpos name = 'jointpos_left_knee_pitch' joint = 'left_knee_pitch' noise = "0" />
     <jointpos name = 'jointpos_left_ankle_pitch' joint = 'left_ankle_pitch' noise = "0" />
     <jointpos name = 'jointpos_left_ankle_roll' joint = 'left_ankle_roll' noise = "0" />
+    <jointpos name = 'jointpos_left_shoulder_pitch' joint = 'left_shoulder_pitch' noise = "0" />
 
     <jointpos name = 'jointpos_right_hip_pitch' joint = 'right_hip_pitch' noise = "0" />
     <jointpos name = 'jointpos_right_hip_roll' joint = 'right_hip_roll' noise = "0" />
@@ -336,6 +343,7 @@
     <jointpos name = 'jointpos_right_knee_pitch' joint = 'right_knee_pitch' noise = "0" />
     <jointpos name = 'jointpos_right_ankle_pitch' joint = 'right_ankle_pitch' noise = "0" />
     <jointpos name = 'jointpos_right_ankle_roll' joint = 'right_ankle_roll' noise = "0" />
+    <jointpos name = 'jointpos_right_shoulder_pitch' joint = 'right_shoulder_pitch' noise = "0" />
 
     <jointvel name = 'jointvel_left_hip_pitch' joint = 'left_hip_pitch' noise = "0" />
     <jointvel name = 'jointvel_left_hip_roll' joint = 'left_hip_roll' noise = "0" />
@@ -343,6 +351,7 @@
     <jointvel name = 'jointvel_left_knee_pitch' joint = 'left_knee_pitch' noise = "0" />
     <jointvel name = 'jointvel_left_ankle_pitch' joint = 'left_ankle_pitch' noise = "0" />
     <jointvel name = 'jointvel_left_ankle_roll' joint = 'left_ankle_roll' noise = "0" />
+    <jointvel name = 'jointvel_left_shoulder_pitch' joint = 'left_shoulder_pitch' noise = "0" />
 
     <jointvel name = 'jointvel_right_hip_pitch' joint = 'right_hip_pitch' noise = "0" />
     <jointvel name = 'jointvel_right_hip_roll' joint = 'right_hip_roll' noise = "0" />
@@ -350,10 +359,11 @@
     <jointvel name = 'jointvel_right_knee_pitch' joint = 'right_knee_pitch' noise = "0" />
     <jointvel name = 'jointvel_right_ankle_pitch' joint = 'right_ankle_pitch' noise = "0" />
     <jointvel name = 'jointvel_right_ankle_roll' joint = 'right_ankle_roll' noise = "0" />
+    <jointvel name = 'jointvel_right_shoulder_pitch' joint = 'right_shoulder_pitch' noise = "0" />
   </sensor>
 
 
   <keyframe>
-    <key name = "home_default" qpos = "0 0 0.61 1 0 0 0 0.48891 0.06213 -0.33853 0.63204 -0.27224 0. -0.48891 -0.06213 0.33853 0.63204 -0.27224 0."/>
+    <key name = "home_default" qpos = "0 0 0.61 1 0 0 0 0.48891 0.06213 -0.33853 0.63204 -0.27224 0. 0.05 -0.48891 -0.06213 0.33853 0.63204 -0.27224 0. -0.05"/>
   </keyframe>
 </mujoco>

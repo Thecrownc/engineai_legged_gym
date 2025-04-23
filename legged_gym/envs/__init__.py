@@ -32,13 +32,20 @@ from legged_gym import LEGGED_GYM_ROOT_DIR, LEGGED_GYM_ENVS_DIR
 from .base.legged_robot import LeggedRobot
 from .zqsa01.zqsa01 import ZqSA01
 from .zqsa01.zqsa01_config import ZqSA01Cfg, ZqSA01CfgPPO
+
 from .x1.x1 import x1
 from .x1.x1_config import x1Cfg, x1CfgPPO
-from .x1_14DOF.x1_14DOF import x114DOF
-from .x1_14DOF.x1_14DOF_config import x114DOF_Cfg, x114DOF_CfgPPO
+
+from .x114DOF.x114DOF import x114DOF
+from .x114DOF.x114DOF_config import x114DOF_Cfg, x114DOF_CfgPPO
+
 from legged_gym.utils.task_registry import task_registry
+
+from .hi.hi import hi
+from .hi.hi_config import hiCfg,hiCfgPPO
 
 task_registry.register("zqsa01", ZqSA01, ZqSA01Cfg(), ZqSA01CfgPPO())
 task_registry.register("x1", x1, x1Cfg(), x1CfgPPO())
 task_registry.register("x114DOF", x114DOF,x114DOF_Cfg(),x114DOF_CfgPPO())
+task_registry.register("hi", hi,hiCfg(),hiCfgPPO())
 

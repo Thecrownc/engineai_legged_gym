@@ -45,7 +45,7 @@ from datetime import datetime
 import pygame
 from threading import Thread
 
-x_vel_cmd, y_vel_cmd, yaw_vel_cmd = 0.8, 0.0, 0.0
+x_vel_cmd, y_vel_cmd, yaw_vel_cmd = 0.5, 0.0, 0.0
 x_vel_max, y_vel_max, yaw_vel_max = 1.5, 1.0, 3.0
 
 joystick_use = False
@@ -85,13 +85,13 @@ def play(args):
     env_cfg, train_cfg = task_registry.get_cfgs(name=args.task)
 
     # override some parameters for testing
-    env_cfg.env.num_envs = min(env_cfg.env.num_envs, 50)
+    env_cfg.env.num_envs = min(env_cfg.env.num_envs, 1)
     env_cfg.terrain.mesh_type = 'plane'
     # env_cfg.terrain.mesh_type = 'trimesh'
     env_cfg.terrain.num_rows = 5
     env_cfg.terrain.num_cols = 5
     env_cfg.terrain.curriculum = False     
-    env_cfg.terrain.max_init_terrain_level = 5
+    env_cfg.terrain.max_init_terrain_level = 10
     env_cfg.noise.add_noise = False
     env_cfg.domain_rand.randomize_friction = False 
     env_cfg.domain_rand.push_robots = False 

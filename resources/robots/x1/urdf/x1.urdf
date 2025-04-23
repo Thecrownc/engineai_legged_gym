@@ -39,11 +39,14 @@
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
+        xyz="0 0 0.02"
         rpy="0 0 0" />
-      <geometry>
+      <!-- <geometry>
         <mesh
-          filename="../meshes/base_link_simple.STL" />
+          filename="../meshes/Base_link.STL" />
+      </geometry> -->
+      <geometry>
+        <box size="0.2 0.2 0.2" />
       </geometry>
     </collision>
   </link>
