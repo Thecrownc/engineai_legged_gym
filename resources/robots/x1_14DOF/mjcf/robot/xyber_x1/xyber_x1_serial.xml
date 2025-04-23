@@ -310,7 +310,7 @@
     <motor name = 'motor_left_knee_pitch' joint = 'left_knee_pitch' ctrlrange = '-150 150' />
     <motor name = 'motor_left_ankle_pitch' joint = 'left_ankle_pitch' ctrlrange = '-18 18' />
     <motor name = 'motor_left_ankle_roll' joint = 'left_ankle_roll' ctrlrange = '-18 18' />
-    <motor name = 'motor_left_shoulder_pitch' joint = 'left_shoulder_pitch' ctrlrange = '-18 18' />
+    <motor name = 'motor_left_shoulder_pitch' joint = 'left_shoulder_pitch' ctrlrange = '-50 50' />
 
     <motor name = 'motor_right_hip_pitch' joint = 'right_hip_pitch' ctrlrange = '-150 150' />
     <motor name = 'motor_right_hip_roll' joint = 'right_hip_roll' ctrlrange = '-50 50' />
@@ -318,7 +318,7 @@
     <motor name = 'motor_right_knee_pitch' joint = 'right_knee_pitch' ctrlrange = '-150 150' />
     <motor name = 'motor_right_ankle_pitch' joint = 'right_ankle_pitch' ctrlrange = '-18 18' />
     <motor name = 'motor_right_ankle_roll' joint = 'right_ankle_roll' ctrlrange = '-18 18' />
-    <motor name = 'motor_right_shoulder_pitch' joint = 'right_shoulder_pitch' ctrlrange = '-18 18' />
+    <motor name = 'motor_right_shoulder_pitch' joint = 'right_shoulder_pitch' ctrlrange = '-50 50' />
   </actuator>
 
   <sensor>
