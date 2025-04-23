@@ -1,12 +1,14 @@
 from legged_gym.envs.base.legged_robot_config import LeggedRobotCfg, LeggedRobotCfgPPO
 
-class x1Cfg(LeggedRobotCfg):
+
+class xbotCfg(LeggedRobotCfg):
     """
     Configuration class for the zqsa01 humanoid robot.
     """
+
     class env(LeggedRobotCfg.env):
         # change the observation dim
-        frame_stack = 15
+        frame_stack = 15  # same as agibot
         c_frame_stack = 3
         num_single_obs = 47
         num_observations = int(frame_stack * num_single_obs)
@@ -14,10 +16,10 @@ class x1Cfg(LeggedRobotCfg):
         num_privileged_obs = int(c_frame_stack * single_num_privileged_obs)
         num_actions = 12
         num_envs = 4096
-        episode_length_s = 24 # episode length in seconds
+        episode_length_s = 24  # episode length in seconds
         use_ref_actions = False
         joint_num = 12
-        
+
     class safety:
         # safety factors
         pos_limit = 1.0
@@ -25,13 +27,11 @@ class x1Cfg(LeggedRobotCfg):
         torque_limit = 0.85
 
     class asset(LeggedRobotCfg.asset):
-        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x1/urdf/x1.urdf'
+        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/XBot/urdf/XBot-L.urdf'
 
-        name = "x1"
-        # foot_name = "6_link"
-        foot_name = "ankle_roll"
-        # knee_name = "4_link"
-        knee_name = "knee_pitch"
+        name = "XBot-L"
+        foot_name = "ankle_roll"  # 脚底
+        knee_name = "knee"  # 膝盖
 
         terminate_after_contacts_on = ['base_link']
         penalize_contacts_on = ["base_link"]
@@ -54,53 +54,48 @@ class x1Cfg(LeggedRobotCfg):
         num_cols = 20  # number of terrain cols (types)
         max_init_terrain_level = 10  # starting curriculum state
         # plane; obstacles; uniform; slope_up; slope_down, stair_up, stair_down
-        terrain_proportions = [0.4, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0]
+        terrain_proportions = [0.2, 0.2, 0.4, 0.1, 0.1, 0, 0]
         restitution = 0.
 
     class noise(LeggedRobotCfg.noise):
         add_noise = True
-        noise_level = 1.5    # scales other values
+        noise_level = 1.5  # scales other values
 
         class noise_scales(LeggedRobotCfg.noise.noise_scales):
             dof_pos = 0.02
-            dof_vel = 2.5 
-            ang_vel = 0.2   
-            lin_vel = 0.1   
+            dof_vel = 2.5
+            ang_vel = 0.2
+            lin_vel = 0.1
             quat = 0.1
             gravity = 0.05
             height_measurements = 0.1
 
-
     class init_state(LeggedRobotCfg.init_state):
-        pos = [0.0, 0.0, 0.59]
-        
-        default_joint_angles = {  # = target angles [rad] when action = 0.0
-            'left_hip_pitch_joint': 0.4,
-            'left_hip_roll_joint': 0.05,
-            'left_hip_yaw_joint': 0.0,
-            'left_knee_pitch_joint': 0.70,
-            'left_ankle_pitch_joint': -0.30,
-            'left_ankle_roll_joint': 0.0,
+        pos = [0.0, 0.0, 0.95]
 
-            'right_hip_pitch_joint': -0.4,
-            'right_hip_roll_joint': -0.05,
-            'right_hip_yaw_joint': 0.0,
-            'right_knee_pitch_joint': 0.70,
-            'right_ankle_pitch_joint': -0.30,
-            'right_ankle_roll_joint': 0.0,
+        default_joint_angles = {  # = target angles [rad] when action = 0.0
+            'left_leg_roll_joint': 0.,
+            'left_leg_yaw_joint': 0.,
+            'left_leg_pitch_joint': 0.,
+            'left_knee_joint': 0.,
+            'left_ankle_pitch_joint': 0.,
+            'left_ankle_roll_joint': 0.,
+            'right_leg_roll_joint': 0.,
+            'right_leg_yaw_joint': 0.,
+            'right_leg_pitch_joint': 0.,
+            'right_knee_joint': 0.,
+            'right_ankle_pitch_joint': 0.,
+            'right_ankle_roll_joint': 0.,
         }
+
     class control(LeggedRobotCfg.control):
         # PD Drive parameters:
         control_type = 'P'
+        stiffness = {'leg_roll': 200.0, 'leg_pitch': 350.0, 'leg_yaw': 200.0,
+                     'knee': 350.0, 'ankle': 15}
+        damping = {'leg_roll': 10, 'leg_pitch': 10, 'leg_yaw':
+            10, 'knee': 10, 'ankle': 10}
 
-        # stiffness = {'1_joint': 50, '2_joint': 50,'3_joint': 70,
-        #              '4_joint': 70, '5_joint': 20, '6_joint': 20}
-        # damping = {'1_joint': 5.0, '2_joint': 5.0,'3_joint': 7.0, 
-        #            '4_joint': 7.0, '5_joint': 2, '6_joint': 2}
-        stiffness = {'hip_pitch_joint': 60, 'hip_roll_joint': 60,'hip_yaw_joint': 40,
-                     'knee_pitch_joint': 80, 'ankle_pitch_joint': 35, 'ankle_roll_joint': 35}
-        damping = {'hip_pitch_joint': 6, 'hip_roll_joint': 3.0,'hip_yaw_joint': 3, 
-                   'knee_pitch_joint': 4, 'ankle_pitch_joint': 2, 'ankle_roll_joint': 2}
         # action scale: target angle = actionScale * action + defaultAngle
         action_scale = 0.5
         # decimation: Number of control action updates @ sim DT per policy DT
@@ -110,17 +105,17 @@ class x1Cfg(LeggedRobotCfg):
         dt = 0.001  # 200 Hz 1000 Hz
         substeps = 1  # 2
         up_axis = 1  # 0 is y, 1 is z
-     
+
         class physx(LeggedRobotCfg.sim.physx):
             num_threads = 10
             solver_type = 1  # 0: pgs, 1: tgs
             num_position_iterations = 4
             num_velocity_iterations = 0
             contact_offset = 0.01  # [m]
-            rest_offset = 0.0   # [m]
+            rest_offset = 0.0  # [m]
             bounce_threshold_velocity = 0.5  # 0.5 #0.5 [m/s]
             max_depenetration_velocity = 1.0
-            max_gpu_contact_pairs = 2**23  # 2**24 -> needed for 8000 envs and more
+            max_gpu_contact_pairs = 2 ** 23  # 2**24 -> needed for 8000 envs and more
             default_buffer_size_multiplier = 5
             # 0: never, 1: last sub-step, 2: all sub-steps (default=2)
             contact_collection = 2
@@ -136,14 +131,14 @@ class x1Cfg(LeggedRobotCfg):
         max_push_ang_vel = 0.6
 
         randomize_base_mass = True
-        added_base_mass_range = [-3.0, 3.0]
+        added_base_mass_range = [-4.0, 4.0]
 
         randomize_base_com = True
         added_base_com_range = [-0.06, 0.06]
 
         randomize_pd_gains = True
-        stiffness_multiplier_range = [0.8, 1.2]  
-        damping_multiplier_range = [0.8, 1.2]    
+        stiffness_multiplier_range = [0.8, 1.2]
+        damping_multiplier_range = [0.8, 1.2]
 
         randomize_calculated_torque = True
         torque_multiplier_range = [0.8, 1.2]
@@ -152,7 +147,7 @@ class x1Cfg(LeggedRobotCfg):
         multiplied_link_mass_range = [0.8, 1.2]
 
         randomize_motor_zero_offset = True
-        motor_zero_offset_range = [-0.035, 0.035] # Offset to add to the motor angles
+        motor_zero_offset_range = [-0.035, 0.035]  # Offset to add to the motor angles
 
         randomize_joint_friction = True
         joint_friction_range = [0.01, 1.15]
@@ -161,13 +156,13 @@ class x1Cfg(LeggedRobotCfg):
         joint_damping_range = [0.3, 1.5]
 
         randomize_joint_armature = True
-        joint_armature_range = [0.008, 0.06]    #
+        joint_armature_range = [0.008, 0.06]  #
 
         add_cmd_action_latency = True
         randomize_cmd_action_latency = True
         range_cmd_action_latency = [1, 10]
-        
-        add_obs_latency = True # no latency for obs_action
+
+        add_obs_latency = True  # no latency for obs_action
         randomize_obs_motor_latency = True
         randomize_obs_imu_latency = True
         range_obs_motor_latency = [1, 10]
@@ -182,34 +177,33 @@ class x1Cfg(LeggedRobotCfg):
         heading_command = False  # if true: compute ang vel command from heading error
 
         class ranges:
-            lin_vel_x = [-0.5, 1.5] # min max [m/s] 
-            lin_vel_y = [-0.5, 0.5]   # min max [m/s]
-            ang_vel_yaw = [-1.5, 1.5]    # min max [rad/s]
+            lin_vel_x = [-0.5, 1.5]  # min max [m/s]
+            lin_vel_y = [-0.5, 0.5]  # min max [m/s]
+            ang_vel_yaw = [-1.5, 1.5]  # min max [rad/s]
             heading = [-3.14, 3.14]
 
     class rewards:
-        # base_height_target = 0.827  TODO 意义不明的参数
-        base_height_target = 0.61  
-        min_dist = 0.15
-        max_dist = 0.8
+        base_height_target = 0.89  # base_link 到 ankle 的距离 ，腿部完全伸直时大约为0.375m，步态时微蹲(0.32-0.35)
+        min_dist = 0.2
+        max_dist = 0.5
         # put some settings here for LLM parameter tuning
-        target_joint_pos_scale = 0.26    # rad ?
-        target_feet_height = 0.05       # m  ?
-        cycle_time = 0.8                # sec ??
+        target_joint_pos_scale = 0.20  # rad ?
+        target_feet_height = 0.08  # m  ? 奖励计算中减掉了0.05
+        cycle_time = 0.64  # sec ??
         only_positive_rewards = True
-        tracking_sigma = 5 
-        max_contact_force = 500  # forces above this value are penalized
-        
+        tracking_sigma = 5
+        max_contact_force = 700  # forces above this value are penalized
+
         class scales:
             joint_pos = 2.2
-            feet_clearance = 1.8
+            feet_clearance = 1.6
             feet_contact_number = 1.4
             # gait
-            feet_air_time = 1.2
+            feet_air_time = 1.5
             foot_slip = -0.1
-            feet_distance = 0.3
-            knee_distance = 0.3
-            # contact 
+            feet_distance = 0.2
+            knee_distance = 0.2
+            # contact
             feet_contact_forces = -0.02
             # vel tracking
             tracking_lin_vel = 1.4
@@ -219,8 +213,8 @@ class x1Cfg(LeggedRobotCfg):
             track_vel_hard = 0.5
             # stand_still = 5
             # base pos
-            default_joint_pos = 1.0 
-            orientation = 2.
+            default_joint_pos = 0.8
+            orientation = 1.
             base_height = 0.2
             base_acc = 0.2
             # energy
@@ -230,7 +224,6 @@ class x1Cfg(LeggedRobotCfg):
             dof_acc = -5e-9
             collision = -1.
 
-
     class normalization:
         class obs_scales:
             lin_vel = 2.
@@ -239,13 +232,14 @@ class x1Cfg(LeggedRobotCfg):
             dof_vel = 0.05
             quat = 1.
             height_measurements = 5.0
+
         clip_observations = 100.
         clip_actions = 100.
 
 
-class x1CfgPPO(LeggedRobotCfgPPO):
+class xbotCfgPPO(LeggedRobotCfgPPO):
     seed = 5
-    runner_class_name = 'OnPolicyRunner'   # DWLOnPolicyRunner
+    runner_class_name = 'OnPolicyRunner'  # DWLOnPolicyRunner
 
     class policy:
         init_noise_std = 1.0
@@ -260,25 +254,24 @@ class x1CfgPPO(LeggedRobotCfgPPO):
         lam = 0.9
         num_mini_batches = 4
         sym_loss = True
-        obs_permutation = [-0.0001, -1, 2, -3, -4,\
-                           -11, -12, 13, 14, 15, -16, -5 , -6 , 7 , 8 , 9 , -10,\
-                           -23, -24, 25, 26, 27, -28, -17, -18, 19, 20, 21, -22,\
-                           -35, -36, 37, 38, 39, -40, -29, -30, 31, 32, 33, -34,\
+        obs_permutation = [-0.0001, -1, 2, -3, -4, \
+                           -11, -12, 13, 14, 15, -16, -5, -6, 7, 8, 9, -10, \
+                           -23, -24, 25, 26, 27, -28, -17, -18, 19, 20, 21, -22, \
+                           -35, -36, 37, 38, 39, -40, -29, -30, 31, 32, 33, -34, \
                            -41, 42, -43, -44, 45, -46]
         act_permutation = [-6, -7, 8, 9, 10, -11, -0.0001, -1, 2, 3, 4, -5]
         frame_stack = 15
         sym_coef = 1.0
 
-
     class runner:
         policy_class_name = 'ActorCritic'
         algorithm_class_name = 'PPO'
-        num_steps_per_env = 24  # per iteration  60
-        max_iterations = 50000  # number of policy updates
+        num_steps_per_env = 24  # per iteration
+        max_iterations = 300000  # number of policy updates
 
         # logging
         save_interval = 100  # check for potential saves every this many iterations
-        experiment_name = 'x1_ppo'
+        experiment_name = 'XBot_ppo'
         run_name = ''
         # load and resume
         resume = False
@@ -286,4 +279,3 @@ class x1CfgPPO(LeggedRobotCfgPPO):
         checkpoint = -1  # -1 = last saved model
         resume_path = None  # updated from load_run and chkpt
 
-    

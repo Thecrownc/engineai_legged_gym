@@ -44,8 +44,12 @@ from legged_gym.utils.task_registry import task_registry
 from .hi.hi import hi
 from .hi.hi_config import hiCfg,hiCfgPPO
 
+from .xbot.xbot import xbot
+from .xbot.xbot_config import xbotCfg,xbotCfgPPO
+
 task_registry.register("zqsa01", ZqSA01, ZqSA01Cfg(), ZqSA01CfgPPO())
 task_registry.register("x1", x1, x1Cfg(), x1CfgPPO())
 task_registry.register("x114DOF", x114DOF,x114DOF_Cfg(),x114DOF_CfgPPO())
 task_registry.register("hi", hi,hiCfg(),hiCfgPPO())
+task_registry.register("xbot", xbot,xbotCfg(),xbotCfgPPO())
 

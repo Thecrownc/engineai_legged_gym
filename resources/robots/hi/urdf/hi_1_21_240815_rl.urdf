@@ -11,7 +11,7 @@ For more information, please see http://wiki.ros.org/sw_urdf_exporter
 	<link name="base_link">
 		<inertial>
 			<origin xyz="-9.6590197018076E-05 2.66945392179974E-09 0.017511404414247" rpy="0 0 0" />
-			<mass value="0.67789918" />
+			<mass value="3.67" />
 			<inertia ixx="0.00370034" ixy="-0.00000112" ixz="-2.33467801644995E-08" 
 									  iyy="0.00024244" iyz="-0.00001886" 
 									  					izz="0.00274356" />

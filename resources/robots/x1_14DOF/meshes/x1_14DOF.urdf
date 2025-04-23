@@ -39,14 +39,11 @@
     </visual>
     <collision>
       <origin
-        xyz="0 0 0.02"
+        xyz="0 0 0"
         rpy="0 0 0" />
-      <!-- <geometry>
-        <mesh
-          filename="../meshes/Base_link.STL" />
-      </geometry> -->
       <geometry>
-        <box size="0.2 0.2 0.2" />
+        <mesh
+          filename="../meshes/base_link_simple.STL" />
       </geometry>
     </collision>
   </link>
@@ -255,7 +252,7 @@
       </material>
     </visual>
     <!-- <collision>
-      <origin
+      <originleft_shoulder
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
@@ -266,7 +263,7 @@
   </link>
   <joint
     name="left_shoulder_pitch_joint"
-    type="fixed">
+    type="revolute">
     <origin
       xyz="0 0.255999999999995 -0.145800000000004"
       rpy="0 0 -3.14159265358978" />
@@ -279,8 +276,8 @@
     <limit
       lower="-3.14"
       upper="3.14"
-      effort="0"
-      velocity="0" />
+      effort="30"
+      velocity="10" />
   </joint>
   <link
     name="left_shoulder_roll">
@@ -451,8 +448,8 @@
     <axis
       xyz="0 0 1" />
     <limit
-      lower="-3.14"
-      upper="3.14"
+      lower="-1.7"
+      upper="1.7"
       effort="0"
       velocity="0" />
   </joint>
@@ -617,7 +614,7 @@
   </link>
   <joint
     name="right_shoulder_pitch_joint"
-    type="fixed">
+    type="revolute">
     <origin
       xyz="0 0.256 0.1458"
       rpy="3.1416 0 0" />
@@ -630,8 +627,8 @@
     <limit
       lower="-3.14"
       upper="3.14"
-      effort="0"
-      velocity="0" />
+      effort="30"
+      velocity="10" />
   </joint>
   <link
     name="right_shoulder_roll">
@@ -689,8 +686,8 @@
     <limit
       lower="-3.14"
       upper="3.14"
-      effort="0"
-      velocity="0" />
+      effort="30"
+      velocity="10" />
   </joint>
   <link
     name="right_shoulder_yaw">
@@ -805,8 +802,8 @@
     <axis
       xyz="0 0 -1" />
     <limit
-      lower="-3.14"
-      upper="3.14"
+      lower="-1.7"
+      upper="1.7"
       effort="0"
       velocity="0" />
   </joint>
@@ -1299,8 +1296,8 @@
     name="left_hip_pitch_joint"
     type="revolute">
     <origin
-      xyz="0.00110 0.092277 -0.023143"
-      rpy="0 -1.5708 1.5708" />
+      xyz="0.00245 0.092277 -0.012143"
+      rpy="0 -0.7854 1.5708" />
     <parent
       link="base_link" />
     <child
@@ -1358,7 +1355,7 @@
     type="revolute">
     <origin
       xyz="0 -0.0405000000000076 -0.0589000000000007"
-      rpy="1.57079632679491 1.57079632679491 0" />
+      rpy="1.57079632679491 0.785398163397451 0" />
     <parent
       link="left_hip_pitch" />
     <child
@@ -1976,8 +1973,8 @@
     name="right_hip_pitch_joint"
     type="revolute">
     <origin
-      xyz="0.00110 -0.092277 -0.023143"
-      rpy="0 -1.5708 -1.5708" />
+      xyz="0.00245 -0.092277 -0.012143"
+      rpy="0 -0.7854 -1.5708" />
     <parent
       link="base_link" />
     <child
@@ -2035,7 +2032,7 @@
     type="revolute">
     <origin
       xyz="0 0.0405000000001067 -0.0588999999999981"
-      rpy="1.57079632679491 1.57079632679491 0" />
+      rpy="1.57079632679491 0.78539816339745 0" />
     <parent
       link="right_hip_pitch" />
     <child

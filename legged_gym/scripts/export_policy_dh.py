@@ -30,17 +30,17 @@
 
 # Copyright (c) 2024, AgiBot Inc. All rights reserved.
 
-from humanoid import LEGGED_GYM_ROOT_DIR
+from legged_gym import LEGGED_GYM_ROOT_DIR
 import os
 import copy
 
-from humanoid.envs import *
-from humanoid.utils import  get_args, task_registry, Logger
-from humanoid.utils.helpers import get_load_path, class_to_dict
+from legged_gym.envs import *
+from legged_gym.utils import  get_args, task_registry, Logger
+from legged_gym.utils.helpers import get_load_path, class_to_dict
 from datetime import datetime
 
 import torch
-from humanoid.algo.ppo import ActorCriticDH
+from legged_gym.algo.ppo import ActorCriticDH
 
 
 class ExportedDH(torch.nn.Module):

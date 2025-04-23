@@ -48,7 +48,7 @@ from threading import Thread
 x_vel_cmd, y_vel_cmd, yaw_vel_cmd = 0.5, 0.0, 0.0
 x_vel_max, y_vel_max, yaw_vel_max = 1.5, 1.0, 3.0
 
-joystick_use = False
+joystick_use = True
 joystick_opened = False
 
 if joystick_use:
@@ -138,7 +138,7 @@ def play(args):
     logger = Logger(env_cfg.sim.dt)
     robot_index = 0 # which robot is used for logging
     joint_index = 5 # which joint is used for logging
-    stop_state_log = 1000 # number of steps before plotting states
+    stop_state_log = 5000 # number of steps before plotting states
     if RENDER:
         camera_properties = gymapi.CameraProperties()
         camera_properties.width = 1920
